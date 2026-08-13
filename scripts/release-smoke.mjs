@@ -44,6 +44,7 @@ try {
 
   const tgz = resolve(work, packed.filename)
   await writeFile(join(work, 'package.json'), '{"private":true,"type":"module"}\n', 'utf8')
+  await writeFile(join(work, 'pnpm-workspace.yaml'), 'packages:\n  - .\n', 'utf8')
   run([
     'add', '--ignore-scripts',
     tgz,

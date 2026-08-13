@@ -37,36 +37,6 @@ importers:
         specifier: ^4.1.8
         version: 4.1.10(@types/node@24.13.3)(vite@8.2.1(@types/node@24.13.3)(esbuild@0.28.2))
 
-  .release-smoke-34txhS:
-    dependencies:
-      '@deepseek-ai/cordis':
-        specifier: 4.0.1
-        version: 4.0.1
-      '@deepseek-ai/dsh-session':
-        specifier: 0.1.0-rc.6
-        version: 0.1.0-rc.6(6fd26f59436a18b115f326d6060415e6)
-      '@deepseek-ai/schemastery':
-        specifier: 3.18.1
-        version: 3.18.1
-      dsh-verification-receipt:
-        specifier: file:D:/cursor_workplace/upstream-triage/dsh-plugin-verification-receipt-20260813/.release-smoke-34txhS/dsh-verification-receipt-0.1.0.tgz
-        version: file:.release-smoke-34txhS/dsh-verification-receipt-0.1.0.tgz(@deepseek-ai/cordis@4.0.1)(@deepseek-ai/dsh-session@0.1.0-rc.6(6fd26f59436a18b115f326d6060415e6))(@deepseek-ai/schemastery@3.18.1)
-
-  .release-smoke-d5QeHr:
-    dependencies:
-      '@deepseek-ai/cordis':
-        specifier: 4.0.1
-        version: 4.0.1
-      '@deepseek-ai/dsh-session':
-        specifier: 0.1.0-rc.6
-        version: 0.1.0-rc.6(6fd26f59436a18b115f326d6060415e6)
-      '@deepseek-ai/schemastery':
-        specifier: 3.18.1
-        version: 3.18.1
-      dsh-verification-receipt:
-        specifier: file:D:/cursor_workplace/upstream-triage/dsh-plugin-verification-receipt-20260813/.release-smoke-d5QeHr/dsh-verification-receipt-0.1.0.tgz
-        version: file:.release-smoke-d5QeHr/dsh-verification-receipt-0.1.0.tgz(@deepseek-ai/cordis@4.0.1)(@deepseek-ai/dsh-session@0.1.0-rc.6(6fd26f59436a18b115f326d6060415e6))(@deepseek-ai/schemastery@3.18.1)
-
 packages:
 
   '@deepseek-ai/cordis@4.0.1':
@@ -459,34 +429,6 @@ packages:
   detect-libc@2.1.2:
     resolution: {integrity: sha512-Btj2BOOO83o3WyH59e8MgXsxEQVcarkUOpEYrubB0urwnN10yQ364rsiByU11nZlqWYZm05i/of7io4mzihBtQ==}
     engines: {node: '>=8'}
-
-  dsh-verification-receipt@file:.release-smoke-34txhS/dsh-verification-receipt-0.1.0.tgz:
-    resolution: {integrity: sha512-hjgFxtEo+vNZtp2qrSlHXRwz337sL77pDNvooVDdfBGkhjQkhp59N0hGEqJI87Ey22K83kEbwQJq+TVp0yREsA==, tarball: file:.release-smoke-34txhS/dsh-verification-receipt-0.1.0.tgz}
-    version: 0.1.0
-    engines: {node: ^22.19.0 || >=24.0.0}
-    peerDependencies:
-      '@deepseek-ai/cordis': ^4.0.1
-      '@deepseek-ai/dsh-session': '>=0.1.0-rc.5 <0.1.0'
-      '@deepseek-ai/schemastery': ^3.18.1
-    peerDependenciesMeta:
-      '@deepseek-ai/cordis':
-        optional: true
-      '@deepseek-ai/dsh-session':
-        optional: true
-
-  dsh-verification-receipt@file:.release-smoke-d5QeHr/dsh-verification-receipt-0.1.0.tgz:
-    resolution: {integrity: sha512-7GiMKmXJ3idOtOYDXivAtmvSdI5ajdyTNqgYnElwofr0oJld6zrj6Qj8npL3/qmUrk4Obu9B8ppV0puBu/rKLw==, tarball: file:.release-smoke-d5QeHr/dsh-verification-receipt-0.1.0.tgz}
-    version: 0.1.0
-    engines: {node: ^22.19.0 || >=24.0.0}
-    peerDependencies:
-      '@deepseek-ai/cordis': ^4.0.1
-      '@deepseek-ai/dsh-session': '>=0.1.0-rc.5 <0.1.0'
-      '@deepseek-ai/schemastery': ^3.18.1
-    peerDependenciesMeta:
-      '@deepseek-ai/cordis':
-        optional: true
-      '@deepseek-ai/dsh-session':
-        optional: true
 
   es-module-lexer@2.3.1:
     resolution: {integrity: sha512-shc1dbU90Yl/xq1QrC7QRtfcwURZuVRfPhZbDoldJ1cn1gzDvBaBWlv0eFolj5+0znnPJz5TXLxsN77X/12KTA==}
@@ -1019,20 +961,6 @@ snapshots:
   convert-source-map@2.0.0: {}
 
   detect-libc@2.1.2: {}
-
-  dsh-verification-receipt@file:.release-smoke-34txhS/dsh-verification-receipt-0.1.0.tgz(@deepseek-ai/cordis@4.0.1)(@deepseek-ai/dsh-session@0.1.0-rc.6(6fd26f59436a18b115f326d6060415e6))(@deepseek-ai/schemastery@3.18.1):
-    dependencies:
-      '@deepseek-ai/schemastery': 3.18.1
-    optionalDependencies:
-      '@deepseek-ai/cordis': 4.0.1
-      '@deepseek-ai/dsh-session': 0.1.0-rc.6(6fd26f59436a18b115f326d6060415e6)
-
-  dsh-verification-receipt@file:.release-smoke-d5QeHr/dsh-verification-receipt-0.1.0.tgz(@deepseek-ai/cordis@4.0.1)(@deepseek-ai/dsh-session@0.1.0-rc.6(6fd26f59436a18b115f326d6060415e6))(@deepseek-ai/schemastery@3.18.1):
-    dependencies:
-      '@deepseek-ai/schemastery': 3.18.1
-    optionalDependencies:
-      '@deepseek-ai/cordis': 4.0.1
-      '@deepseek-ai/dsh-session': 0.1.0-rc.6(6fd26f59436a18b115f326d6060415e6)
 
   es-module-lexer@2.3.1: {}
 
