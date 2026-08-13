@@ -48,7 +48,9 @@ describe('real DSH composition', () => {
     expect(session.deriveMessages()).toEqual(messagesBeforeEnd)
     await plugin.dispose()
 
-    const lines = (await readFile(outputPath, 'utf8')).trim().split('\n')
+    const raw = await readFile(outputPath, 'utf8')
+    expect(raw.endsWith('\n')).toBe(true)
+    const lines = raw.trim().split('\n')
     expect(lines).toHaveLength(1)
     const receipt = JSON.parse(lines[0]!) as Record<string, unknown>
     expect(receipt).toMatchObject({
@@ -77,6 +79,26 @@ describe('real DSH composition', () => {
     const outputPath = join(root, 'verification-receipts', 'v1', 'receipts.jsonl')
     const receipt = JSON.parse((await readFile(outputPath, 'utf8')).trim()) as Record<string, unknown>
     expect(receipt).toMatchObject({ kind: 'dsh-verification-receipt', turn: 1 })
+    await ctx.fiber.dispose()
+  })
+
+  it('stops accepting turn events as soon as disposal begins', async () => {
+    const root = await mkdtemp(join(tmpdir(), 'dsh-verification-receipt-dispose-'))
+    roots.push(root)
+    const outputPath = join(root, 'receipts.jsonl')
+    const ctx = new Context()
+    await ctx.plugin(SessionStore)
+    const plugin = await ctx.plugin(apply, { outputPath })
+    const session = ctx.sessions.create()
+    session.append('turn/start', { turn: 1 })
+    session.append('turn/end', { turn: 1, reason: { kind: 'completed' } })
+
+    const disposing = plugin.dispose()
+    session.append('turn/start', { turn: 2 })
+    session.append('turn/end', { turn: 2, reason: { kind: 'completed' } })
+    await disposing
+
+    expect((await readFile(outputPath, 'utf8')).trim().split('\n')).toHaveLength(1)
     await ctx.fiber.dispose()
   })
 })

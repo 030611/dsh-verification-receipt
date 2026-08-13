@@ -2,4 +2,5 @@ lib/
 node_modules/
 coverage/
 .smoke/
+.release-smoke-*/
 *.log

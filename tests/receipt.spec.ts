@@ -24,6 +24,17 @@ function result(seq: number, turn: number, step: number, id: string, text: strin
   })
 }
 
+function signalFor(name: string, args: unknown): unknown {
+  const end = event('turn/end', 3, { turn: 9, reason: { kind: 'completed' } })
+  const fixture = session('matrix', [
+    event('turn/start', 0, { turn: 9 }),
+    event('tool/call', 1, { turn: 9, step: 1, callId: 'matrix', name, arguments: args }),
+    result(2, 9, 1, 'matrix', 'ok'),
+    end,
+  ])
+  return createReceipt(fixture, end).verificationSignals[0]
+}
+
 describe('verification receipt', () => {
   it('records only summary fields and a deterministic hash', () => {
     const end = event('turn/end', 6, { turn: 1, reason: { kind: 'completed' } })
@@ -188,6 +199,32 @@ describe('verification receipt', () => {
       { source: 'tool-name', category: 'check', status: 'unresolved' },
       { source: 'command', category: 'test', status: 'unresolved' },
     ])
+  })
+
+  it.each([
+    ['command JSON string', 'bash', '{"command":"pnpm test"}', 'test'],
+    ['cmd object field', 'pwsh', { cmd: 'pnpm lint' }, 'lint'],
+    ['case-insensitive quoted wrapper', 'SHELL_COMMAND', { command: 'bash -lc "PNPM VITEST run"' }, 'test'],
+    ['PowerShell wrapper and quotes', 'terminal_exec', { command: 'pwsh -Command "npm run TYPECHECK"' }, 'typecheck'],
+  ])('supports %s', (_label, name, args, category) => {
+    expect(signalFor(name, args)).toMatchObject({ source: 'command', category })
+  })
+
+  it.each([
+    ['array command', 'bash', { command: ['pnpm', 'test'] }],
+    ['argv-only shape', 'bash', { argv: ['pnpm', 'test'] }],
+    ['custom shell name', 'my_shell', { command: 'pnpm test' }],
+    ['nested command', 'bash', { command: { text: 'pnpm test' } }],
+    ['custom alias without keyword', 'bash', { command: 'pnpm run ci' }],
+  ])('leaves unsupported %s unclassified', (_label, name, args) => {
+    expect(signalFor(name, args)).toBeUndefined()
+  })
+
+  it('documents lexical false positives by classifying quoted non-execution text', () => {
+    expect(signalFor('bash', { command: 'echo "do not run tests"' })).toMatchObject({
+      source: 'command',
+      category: 'test',
+    })
   })
 
   it('does not treat a turn end from another event as the receipt boundary', () => {

@@ -89,15 +89,23 @@ class JsonlWriter {
 export function apply(ctx: Context, config: Config = {}): void {
   const resolved = resolveConfig(config)
   const writer = new JsonlWriter(ctx, resolved.outputPath)
-  ctx.on('session/event', (session: Session, event: SessionEvent) => {
-    if (event.type !== 'turn/end') return
-    try {
-      writer.enqueue(createReceipt(session, event))
-    } catch (error: unknown) {
-      ctx.logger.warn(`verification-receipt: could not summarize turn: ${String(error)}`)
+  ctx.effect(function* () {
+    let accepting = true
+    yield async () => writer.drain()
+    yield ctx.on('session/event', (session: Session, event: SessionEvent) => {
+      // Cordis clears the public fiber uid synchronously when explicit disposal
+      // starts, before its async unload checkpoint can unregister this listener.
+      if (!accepting || ctx.fiber.uid === null || event.type !== 'turn/end') return
+      try {
+        writer.enqueue(createReceipt(session, event))
+      } catch (error: unknown) {
+        ctx.logger.warn(`verification-receipt: could not summarize turn: ${String(error)}`)
+      }
+    })
+    // Yield in drain/listener/gate order: Cordis disposes nested effects in
+    // reverse, so any unload closes the gate, unregisters, then awaits writes.
+    yield () => {
+      accepting = false
     }
-  })
-  ctx.effect(() => async () => {
-    await writer.drain()
-  }, 'verification-receipt JSONL drain')
+  }, 'verification-receipt listener and JSONL drain')
 }

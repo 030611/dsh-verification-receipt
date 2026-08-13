@@ -12,7 +12,13 @@ The JSONL destination should be readable and writable only by the local user who
 
 Anyone able to modify the JSONL file can delete, reorder, replace, or recompute receipt rows. `receiptHash` is an integrity checksum, not authentication. Use an external signed, append-only, access-controlled sink if adversarial tamper resistance is required.
 
+Both `sessionIdHash` and `receiptHash` are unkeyed and recomputable. Low-entropy or predictable Session ids can be guessed offline, and independent receipt rows cannot reveal deletion, insertion, reordering, truncation, rollback, or replacement. This plugin deliberately has no hash chain and is not an evidence-audit ledger.
+
 Receipt rows omit arguments, outputs, messages, and raw Session ids. They still expose timing, turn numbers, outcome counts, coarse verification categories, and a deterministic Session-id hash. Those facts may be sensitive, and the hash allows rows for one Session to be linked.
+
+One plugin instance serializes its own writes. Separate processes have no shared lock, so writing one path from multiple DSH processes has no guaranteed ordering or row-boundary integrity. A crash can lose queued rows or leave an incomplete tail line. The queue is unbounded under sustained filesystem backpressure.
+
+Directory/file creation modes are best-effort: existing permissions are unchanged, Windows may ignore POSIX modes, and a pre-existing symbolic link is followed. The configured destination is a trusted-administrator boundary, not a defense against hostile path components.
 
 ## Report a vulnerability
 
