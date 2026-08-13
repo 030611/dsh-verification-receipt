@@ -1,0 +1,9 @@
+{
+  "name": "dsh-verification-receipt",
+  "description": "Privacy-minimal per-turn execution-trace receipts for DeepSeek Harness",
+  "version": "0.1.0",
+  "entry": {
+    "name": "dsh-verification-receipt",
+    "inject": ["sessions"]
+  }
+}

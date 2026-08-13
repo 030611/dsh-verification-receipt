@@ -1,0 +1,5 @@
+# DSH Verification Receipt Profile Bundle.
+# This observer adds no tool, prompt section, or session-log event.
+- insert:
+    - id: verification-receipt
+      name: dsh-verification-receipt
