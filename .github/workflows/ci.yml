@@ -12,12 +12,13 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.19.0
       - uses: actions/setup-node@v4
         with:
           node-version: 24.19.0
           cache: pnpm
-      - name: Enable pinned pnpm
-        run: corepack enable && corepack prepare pnpm@11.19.0 --activate
       - name: Verify package manager
         run: test "$(pnpm --version)" = 11.19.0
       - name: Install locked dependencies
