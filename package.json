@@ -3,6 +3,24 @@
   "description": "Privacy-minimal heuristic per-turn execution summaries for DeepSeek Harness",
   "version": "0.1.0",
   "license": "MIT",
+  "keywords": [
+    "deepseek-harness",
+    "dsh-plugin",
+    "verification",
+    "observability",
+    "privacy"
+  ],
+  "homepage": "https://github.com/030611/dsh-verification-receipt#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/030611/dsh-verification-receipt.git"
+  },
+  "bugs": {
+    "url": "https://github.com/030611/dsh-verification-receipt/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "packageManager": "pnpm@11.19.0",
   "engines": {
     "node": "^22.19.0 || >=24.0.0"

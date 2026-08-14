@@ -2,7 +2,14 @@
 
 [English](README.md)
 
+[![CI](https://github.com/030611/dsh-verification-receipt/actions/workflows/ci.yml/badge.svg)](https://github.com/030611/dsh-verification-receipt/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
+> 回答一个范围更小、可以检查的问题：这一轮中，DSH 记录了哪些形似验证操作的执行信号？
+
 DSH Verification Receipt 是一个面向 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) 的小型、被动式 Profile Bundle。每次耐久的 `turn/end` 到达后，它会向本地 JSONL 文件追加一条隐私最小化、启发式执行摘要。
+
+![Verification Receipt 数据流](https://raw.githubusercontent.com/030611/dsh-verification-receipt/main/docs/verification-flow.svg)
 
 它记录执行痕迹，不证明语义正确。凭证只能说明 DSH 记录了工具调用，并且词法启发式发现了可能的验证信号；它永远不能证明“测试已运行”，也不能说明正确命令得到执行、断言充分、输出真实或助手结论正确。
 
@@ -14,15 +21,14 @@ DSH Verification Receipt 是一个面向 [DeepSeek Harness](https://github.com/d
 
 ## 安装
 
-构建当前 checkout，并把它加入需要生成凭证的每个 profile：
+把已发布的包加入需要生成凭证的每个 profile：
 
 ```sh
-pnpm install --frozen-lockfile
-pnpm run check
-dsh plugin --profile web add /path/to/dsh-verification-receipt
-dsh plugin --profile headless add /path/to/dsh-verification-receipt
+dsh plugin --profile web add dsh-verification-receipt
 dsh --profile web --dump-config
 ```
+
+如果其他 profile（例如 `headless`）也需要凭证，请换用对应 profile 名重复第一条命令。本地开发时，克隆本仓库并运行 `pnpm install --frozen-lockfile && pnpm run check`，再把 checkout 路径而不是包名传给 `dsh plugin ... add`。
 
 `package.json` 声明 `dsh.bundle.patch`；`cordis.patch.yml` 插入一个普通观察插件。任何提供核心 Session 服务的 DSH 输出面都可以使用它。
 

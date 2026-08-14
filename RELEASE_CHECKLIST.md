@@ -36,10 +36,11 @@ name. `performance:smoke` is a regression signal, not a benchmark guarantee.
 ## Before any future external release
 
 - Confirm a clean worktree and record the local commit SHA.
+- Confirm the npm package name is still controlled by the intended publisher,
+  and that the release version and dist-tag are intentional.
 - Verify the tarball includes `README.md`, `README.zh.md`, `LICENSE`, and
   `SECURITY.md`; confirm both READMEs remain UTF-8.
-- Read the CI workflow as a declaration of local gates only. It has
-  `contents: read` permission and has not been executed online until a future
-  repository actually enables it.
-- Obtain separate explicit authorization before creating a repository, pushing,
-  tagging, or publishing anything.
+- Confirm the repository CI passes at the exact commit selected for release;
+  local success is not a substitute for that remote result.
+- Obtain separate explicit authorization before pushing, tagging, creating a
+  release, or publishing anything.

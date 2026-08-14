@@ -2,7 +2,14 @@
 
 [中文](README.zh.md)
 
+[![CI](https://github.com/030611/dsh-verification-receipt/actions/workflows/ci.yml/badge.svg)](https://github.com/030611/dsh-verification-receipt/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
+> Ask a smaller, checkable question: what verification-shaped execution signals did DSH record this turn?
+
 DSH Verification Receipt is a small, passive Profile Bundle for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness). After each durable `turn/end`, it appends one privacy-minimal, heuristic execution summary to a local JSONL file.
+
+![Verification Receipt data flow](https://raw.githubusercontent.com/030611/dsh-verification-receipt/main/docs/verification-flow.svg)
 
 It records execution traces, not semantic correctness. A receipt shows only that DSH logged tool calls and that a lexical heuristic found a possible verification signal. It never proves that a test ran. It cannot show that the right command executed, that assertions were sufficient, that output was truthful, or that the assistant's conclusion was correct.
 
@@ -14,15 +21,14 @@ The package is audited against DeepSeek Harness commit `47f943859bef60e416049234
 
 ## Install
 
-Build this checkout and add it to every profile that should emit receipts:
+Add the published package to every profile that should emit receipts:
 
 ```sh
-pnpm install --frozen-lockfile
-pnpm run check
-dsh plugin --profile web add /path/to/dsh-verification-receipt
-dsh plugin --profile headless add /path/to/dsh-verification-receipt
+dsh plugin --profile web add dsh-verification-receipt
 dsh --profile web --dump-config
 ```
+
+Repeat the first command with another profile name (for example, `headless`) when that profile also needs receipts. For local development, clone this repository, run `pnpm install --frozen-lockfile && pnpm run check`, and pass the checkout path to `dsh plugin ... add` instead of the package name.
 
 `package.json` declares `dsh.bundle.patch`; `cordis.patch.yml` inserts one ordinary observer plugin. It works on any DSH surface that provides the core Session service.
 
