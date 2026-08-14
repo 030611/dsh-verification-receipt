@@ -5,6 +5,7 @@
 [![CI](https://github.com/030611/dsh-verification-receipt/actions/workflows/ci.yml/badge.svg)](https://github.com/030611/dsh-verification-receipt/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![awesome · DSH plugin](https://awesome-dsh-plugin.com/badge.svg)](https://awesome-dsh-plugin.com)
+[![featured on dsh-suite](https://img.shields.io/badge/featured%20on-dsh--suite-4d6bfe)](https://whyihaveyou.github.io/dsh-suite/)
 
 > 回答一个范围更小、可以检查的问题：这一轮中，DSH 记录了哪些形似验证操作的执行信号？
 
