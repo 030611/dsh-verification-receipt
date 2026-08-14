@@ -47,6 +47,10 @@ dsh --profile web --dump-config
 
 ## 输出
 
+下图来自发布版插件处理合成、非用户 DSH 事件后生成的真实 receipt；右侧只展示部分落盘字段。它不是用户会话，也不证明测试运行或通过。
+
+![合成夹具产生的真实 Verification Receipt 输出](docs/receipt-output.png)
+
 默认文件为：
 
 ```text
@@ -97,6 +101,8 @@ $DSH_HOME/verification-receipts/v1/receipts.jsonl
 两个 hash 都没有密钥，均可重算。`receiptHash` 是对其前面全部凭证字段按输出顺序计算的 SHA-256；能编辑一行的人也能重新计算它。独立行无法暴露删除、插入、重排、截断、回滚或替换。它不是签名、可信时间戳、哈希链、承诺或防篡改日志。
 
 ## 隐私与 Agent 行为
+
+![Receipt 保留与排除字段边界](docs/privacy-boundary.png)
 
 落盘凭证不包含：
 

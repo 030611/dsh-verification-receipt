@@ -47,6 +47,10 @@ Repeat the first command with another profile name (for example, `headless`) whe
 
 ## Output
 
+The image below shows a real receipt emitted by the released plugin code over synthetic, non-user DSH events; the right side displays selected persisted fields only. It is not a user conversation and does not prove that tests ran or passed.
+
+![Real Verification Receipt output from a synthetic fixture](docs/receipt-output.png)
+
 The default file is:
 
 ```text
@@ -97,6 +101,8 @@ Each line has this form:
 Both hashes are unkeyed and recomputable. `receiptHash` is SHA-256 over the exact preceding receipt fields in their emitted order. Anyone who can edit a row can recompute it. Independent rows do not reveal deletion, insertion, reordering, truncation, rollback, or replacement. The hash is neither a signature nor a trusted timestamp, hash chain, commitment, or tamper-evident log.
 
 ## Privacy and agent behavior
+
+![Receipt persistence and exclusion boundary](docs/privacy-boundary.png)
 
 The persisted receipt does not contain:
 
