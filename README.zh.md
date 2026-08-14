@@ -3,11 +3,22 @@
 [English](README.md)
 
 [![CI](https://github.com/030611/dsh-verification-receipt/actions/workflows/ci.yml/badge.svg)](https://github.com/030611/dsh-verification-receipt/actions/workflows/ci.yml)
+[![npm](https://img.shields.io/npm/v/dsh-verification-receipt)](https://www.npmjs.com/package/dsh-verification-receipt)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![awesome · DSH plugin](https://awesome-dsh-plugin.com/badge.svg)](https://awesome-dsh-plugin.com)
 [![featured on dsh-suite](https://img.shields.io/badge/featured%20on-dsh--suite-4d6bfe)](https://whyihaveyou.github.io/dsh-suite/)
 
+![DSH Verification Receipt 社交预览图](docs/social-preview.jpg)
+
 > 回答一个范围更小、可以检查的问题：这一轮中，DSH 记录了哪些形似验证操作的执行信号？
+
+```sh
+dsh plugin --profile web add dsh-verification-receipt
+```
+
+Receipt 汇总已记录的工具计数与词法层面的形似验证信号；它**不能**证明测试确实运行，也不能证明代码正确。
+
+> 由社区维护，并非 DeepSeek 官方项目。相关 trust-layer 插件：[Telemetry Redactor](https://github.com/030611/dsh-telemetry-redactor)、[Evidence Audit](https://github.com/030611/qiushi-dsh-evidence-audit) 与 [Context Provenance](https://github.com/030611/dsh-context-provenance)。
 
 DSH Verification Receipt 是一个面向 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) 的小型、被动式 Profile Bundle。每次耐久的 `turn/end` 到达后，它会向本地 JSONL 文件追加一条隐私最小化、启发式执行摘要。
 
