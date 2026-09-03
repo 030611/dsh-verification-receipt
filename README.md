@@ -30,7 +30,7 @@ This is intentionally not an evidence-audit ledger: rows stay independent and th
 
 ## Compatibility evidence
 
-The package is audited against DeepSeek Harness commit `47f943859bef60e4160492346772ded9b24f765a`, whose manifests declare `@deepseek-ai/dsh-session` `0.1.0-rc.5`, Cordis `4.0.1`, and Schemastery `3.18.1`. Peer ranges start at those versions and stop before `dsh-session` stable `0.1.0` or the next Cordis/Schemastery semver major. The release checks also exercise the available `dsh-session` `0.1.0-rc.6` package. Versions admitted by the range but not named here are compatibility expectations, not tested evidence. Cordis and Session are optional host peers because DSH supplies their runtime services; Schemastery is included as an exact runtime dependency and also declared as a compatibility peer.
+Version 0.1.1 supports exactly DSH `0.1.2-alpha.3`, `0.1.2-alpha.4`, and `0.1.2-alpha.5` on Node.js `^22.19.0 || >=24.0.0`. Each release passed local package gates and disposable Windows Web Profile install, composed-config, cold-start, and uninstall acceptance. See [the compatibility evidence](docs/compatibility-0.1.1.md) for the exact boundary. Cordis and Session are optional host peers because DSH supplies their runtime services; Schemastery is included as an exact runtime dependency and also declared as a compatibility peer.
 
 ## Install
 

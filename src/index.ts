@@ -97,7 +97,7 @@ export function apply(ctx: Context, config: Config = {}): void {
       // starts, before its async unload checkpoint can unregister this listener.
       if (!accepting || ctx.fiber.uid === null || event.type !== 'turn/end') return
       try {
-        writer.enqueue(createReceipt(session, event))
+        writer.enqueue(createReceipt({ id: session.id, events: session.snapshotEvents() }, event))
       } catch (error: unknown) {
         ctx.logger.warn(`verification-receipt: could not summarize turn: ${String(error)}`)
       }

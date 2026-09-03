@@ -1,7 +1,7 @@
 {
   "name": "dsh-verification-receipt",
   "description": "Privacy-minimal heuristic per-turn execution summaries for DeepSeek Harness",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "license": "MIT",
   "keywords": [
     "deepseek-harness",
@@ -39,6 +39,7 @@
     "lib",
     "cordis.patch.yml",
     "dsh.plugin.json",
+    "docs/compatibility-0.1.1.md",
     "README.md",
     "README.zh.md",
     "LICENSE",
@@ -47,14 +48,17 @@
   "dsh": {
     "bundle": {
       "patch": "./cordis.patch.yml"
-    }
-  },
-  "dshCompatibility": {
-    "testedHead": "47f943859bef60e4160492346772ded9b24f765a",
-    "peersAtTestedHead": {
-      "@deepseek-ai/cordis": "4.0.1",
-      "@deepseek-ai/dsh-session": "0.1.0-rc.5",
-      "@deepseek-ai/schemastery": "3.18.1"
+    },
+    "compatibility": {
+      "dsh": "0.1.2-alpha.3 || 0.1.2-alpha.4 || 0.1.2-alpha.5",
+      "dshReleases": {
+        "0.1.2-alpha.3": "compatible",
+        "0.1.2-alpha.4": "compatible",
+        "0.1.2-alpha.5": "compatible"
+      },
+      "profiles": [
+        "web"
+      ]
     }
   },
   "scripts": {
@@ -68,9 +72,9 @@
     "check": "pnpm run typecheck && pnpm run test && pnpm run build && pnpm run publint"
   },
   "peerDependencies": {
-    "@deepseek-ai/cordis": "^4.0.1",
-    "@deepseek-ai/dsh-session": ">=0.1.0-rc.5 <0.1.0",
-    "@deepseek-ai/schemastery": "^3.18.1"
+    "@deepseek-ai/cordis": "^4.0.2",
+    "@deepseek-ai/dsh-session": "0.1.2-alpha.3 || 0.1.2-alpha.4 || 0.1.2-alpha.5",
+    "@deepseek-ai/schemastery": "^3.18.2"
   },
   "peerDependenciesMeta": {
     "@deepseek-ai/cordis": {
@@ -81,13 +85,13 @@
     }
   },
   "dependencies": {
-    "@deepseek-ai/schemastery": "3.18.1"
+    "@deepseek-ai/schemastery": "3.18.2"
   },
   "devDependencies": {
-    "@deepseek-ai/cordis": "4.0.1",
-    "@deepseek-ai/dsh-llm": "0.1.0-rc.6",
-    "@deepseek-ai/dsh-session": "0.1.0-rc.6",
-    "@deepseek-ai/schemastery": "3.18.1",
+    "@deepseek-ai/cordis": "4.0.2",
+    "@deepseek-ai/dsh-llm": "0.1.2-alpha.5",
+    "@deepseek-ai/dsh-session": "0.1.2-alpha.5",
+    "@deepseek-ai/schemastery": "3.18.2",
     "@types/node": "^24.0.0",
     "esbuild": "0.28.2",
     "publint": "^0.3.12",

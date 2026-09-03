@@ -1,7 +1,7 @@
 import { readFile } from 'node:fs/promises'
 import { describe, expect, it } from 'vitest'
 
-const OFFICIAL_HEAD = '47f943859bef60e4160492346772ded9b24f765a'
+const DSH_RANGE = '0.1.2-alpha.3 || 0.1.2-alpha.4 || 0.1.2-alpha.5'
 
 describe('release manifest', () => {
   it('binds evidence-backed peer ranges to the audited DSH head', async () => {
@@ -10,28 +10,35 @@ describe('release manifest', () => {
       peerDependencies: Record<string, string>
       peerDependenciesMeta?: Record<string, { optional?: boolean }>
       dependencies?: Record<string, string>
-      dshCompatibility?: { testedHead?: string, peersAtTestedHead?: Record<string, string> }
+      dsh?: {
+        compatibility?: {
+          dsh?: string
+          dshReleases?: Record<string, string>
+          profiles?: string[]
+        }
+      }
     }
     expect(manifest.packageManager).toBe('pnpm@11.19.0')
     expect(manifest.peerDependencies).toEqual({
-      '@deepseek-ai/cordis': '^4.0.1',
-      '@deepseek-ai/dsh-session': '>=0.1.0-rc.5 <0.1.0',
-      '@deepseek-ai/schemastery': '^3.18.1',
+      '@deepseek-ai/cordis': '^4.0.2',
+      '@deepseek-ai/dsh-session': DSH_RANGE,
+      '@deepseek-ai/schemastery': '^3.18.2',
     })
     expect(manifest).toMatchObject({
-      dependencies: { '@deepseek-ai/schemastery': '3.18.1' },
+      dependencies: { '@deepseek-ai/schemastery': '3.18.2' },
       peerDependenciesMeta: {
         '@deepseek-ai/cordis': { optional: true },
         '@deepseek-ai/dsh-session': { optional: true },
       },
     })
-    expect(manifest.dshCompatibility).toEqual({
-      testedHead: OFFICIAL_HEAD,
-      peersAtTestedHead: {
-        '@deepseek-ai/cordis': '4.0.1',
-        '@deepseek-ai/dsh-session': '0.1.0-rc.5',
-        '@deepseek-ai/schemastery': '3.18.1',
+    expect(manifest.dsh?.compatibility).toEqual({
+      dsh: DSH_RANGE,
+      dshReleases: {
+        '0.1.2-alpha.3': 'compatible',
+        '0.1.2-alpha.4': 'compatible',
+        '0.1.2-alpha.5': 'compatible',
       },
+      profiles: ['web'],
     })
   })
 

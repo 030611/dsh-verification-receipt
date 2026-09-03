@@ -3,7 +3,7 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { Context } from '@deepseek-ai/cordis'
-import { CallId, createToolResultMessage } from '@deepseek-ai/dsh-llm'
+import { createToolResultMessage, ToolCallId } from '@deepseek-ai/dsh-llm'
 import SessionStore from '@deepseek-ai/dsh-session'
 import { apply } from '../src/index.ts'
 
@@ -29,7 +29,7 @@ describe('real DSH composition', () => {
     session.append('tool/call', {
       turn: 1,
       step: 1,
-      callId: CallId('c1'),
+      callId: ToolCallId('c1'),
       name: 'read',
       arguments: '{"path":"private.txt"}',
     })
@@ -37,7 +37,7 @@ describe('real DSH composition', () => {
       turn: 1,
       step: 1,
       message: createToolResultMessage({
-        callId: CallId('c1'),
+        callId: ToolCallId('c1'),
         content: [{ type: 'text', text: 'private result' }],
         isError: false,
       }),

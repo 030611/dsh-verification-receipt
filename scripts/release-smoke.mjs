@@ -9,6 +9,7 @@ const EXPECTED_FILES = [
   'README.zh.md',
   'SECURITY.md',
   'cordis.patch.yml',
+  'docs/compatibility-0.1.1.md',
   'dsh.plugin.json',
   'lib/index.js',
   'lib/types/index.d.ts',
@@ -48,9 +49,9 @@ try {
   run([
     'add', '--ignore-scripts',
     tgz,
-    '@deepseek-ai/cordis@4.0.1',
-    '@deepseek-ai/dsh-session@0.1.0-rc.6',
-    '@deepseek-ai/schemastery@3.18.1',
+    '@deepseek-ai/cordis@4.0.2',
+    '@deepseek-ai/dsh-session@0.1.2-alpha.5',
+    '@deepseek-ai/schemastery@3.18.2',
   ], work)
   await writeFile(join(work, 'smoke.mjs'), [
     "import * as plugin from 'dsh-verification-receipt'",

@@ -30,7 +30,7 @@ DSH Verification Receipt 是一个面向 [DeepSeek Harness](https://github.com/d
 
 ## 兼容性证据
 
-本包以 DeepSeek Harness 提交 `47f943859bef60e4160492346772ded9b24f765a` 为审计基线；该提交的 manifest 声明 `@deepseek-ai/dsh-session` `0.1.0-rc.5`、Cordis `4.0.1` 和 Schemastery `3.18.1`。peer 范围从这些版本开始，在 `dsh-session` 稳定版 `0.1.0` 或 Cordis/Schemastery 下一个 semver 主版本之前结束。发布检查也覆盖当前可安装的 `dsh-session` `0.1.0-rc.6`。范围内但未在此点名的版本只是兼容预期，不是实测证据。Cordis 和 Session 由 DSH 宿主提供，因此标为 optional peer；Schemastery 既以精确版本作为运行时依赖，也声明为兼容性 peer。
+版本 0.1.1 精确支持 DSH `0.1.2-alpha.3`、`0.1.2-alpha.4` 和 `0.1.2-alpha.5`，Node.js 范围为 `^22.19.0 || >=24.0.0`。每个 DSH 版本均通过本地包门和一次性 Windows Web Profile 的安装、合成配置、冷启动及卸载验收。精确边界见[兼容性证据](docs/compatibility-0.1.1.md)。Cordis 和 Session 由 DSH 宿主提供，因此标为 optional peer；Schemastery 既以精确版本作为运行时依赖，也声明为兼容性 peer。
 
 ## 安装
 
