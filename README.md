@@ -34,6 +34,12 @@ Version 0.1.1 supports exactly DSH `0.1.2-alpha.3`, `0.1.2-alpha.4`, and `0.1.2-
 
 ## Install
 
+The compatibility evidence above describes source version 0.1.1. A GitHub
+version change does not publish to npm: check `npm view dsh-verification-receipt version`
+before assuming the registry package includes those changes. To use this exact
+source version before it is published, build and pack the checkout, then pass
+the resulting `.tgz` to `dsh plugin --profile web add`.
+
 Add the published package to every profile that should emit receipts:
 
 ```sh
@@ -42,6 +48,19 @@ dsh --profile web --dump-config
 ```
 
 Repeat the first command with another profile name (for example, `headless`) when that profile also needs receipts. For local development, clone this repository, run `pnpm install --frozen-lockfile && pnpm run check`, and pass the checkout path to `dsh plugin ... add` instead of the package name.
+
+The tarball includes compiled JavaScript and TypeScript declarations; consumers
+do not need TypeScript, esbuild, or a plugin build step. For a standalone
+installation, `pnpm add --ignore-scripts dsh-verification-receipt@<version>`
+disables dependency lifecycle scripts (the placeholder must be a published
+version). This is a package-manager command, not a DSH CLI option.
+
+In this source tree, `prepack` runs the build before packing/publishing; there
+is no `prepare`, `preinstall`, `install`, or `postinstall` hook. A checkout needs
+an explicit `pnpm run build` or `pnpm run check` after dependency installation.
+Git-source dependencies are not a script-free installation path: package
+managers can run `prepack` while preparing them. Prefer a prebuilt registry
+package or reviewed tarball. See [SECURITY.md](SECURITY.md#installation-and-build-boundary).
 
 `package.json` declares `dsh.bundle.patch`; `cordis.patch.yml` inserts one ordinary observer plugin. It works on any DSH surface that provides the core Session service.
 
@@ -172,7 +191,7 @@ pnpm run release:smoke
 pnpm run performance:smoke
 ```
 
-Tests cover privacy exclusions, deterministic hashing, top-level and Code Mode final states, the supported/unsupported classification matrix, listener disposal, disk draining, and a real DSH `Context + SessionStore` composition. `release:smoke` enforces the exact tarball file list, installs the real `.tgz` into a temporary project, and imports it by package name.
+Tests cover privacy exclusions, deterministic hashing, top-level and Code Mode final states, the supported/unsupported classification matrix, listener disposal, disk draining, and a real DSH `Context + SessionStore` composition. `release:smoke` removes generated `lib/`, packs from scratch with lifecycle metadata retained, rejects consumer install hooks, and enforces the exact file list. It installs the real `.tgz` into separate temporary projects with scripts disabled and enabled, then imports it by package name and checks a synthetic receipt.
 
 ## License
 

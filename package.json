@@ -63,7 +63,7 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json && esbuild src/index.ts --bundle --packages=external --platform=node --format=esm --target=node22 --outfile=lib/index.js",
-    "prepare": "pnpm run build",
+    "prepack": "pnpm run build",
     "publint": "publint",
     "performance:smoke": "node scripts/performance-smoke.mjs",
     "release:smoke": "node scripts/release-smoke.mjs",

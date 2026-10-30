@@ -29,9 +29,12 @@ pnpm run release:smoke
 pnpm run performance:smoke
 ```
 
-`release:smoke` runs `publint`, checks the exact tarball file list, installs
-the real `.tgz` into an isolated temporary workspace, and imports it by package
-name. `performance:smoke` is a regression signal, not a benchmark guarantee.
+`check` runs `publint`. `release:smoke` removes generated `lib/` and packs from
+scratch with lifecycle metadata retained. It rejects consumer install hooks,
+checks the exact tarball file list, and imports the real `.tgz` in separate
+temporary projects with scripts disabled and enabled. Each import also checks
+a synthetic receipt. `performance:smoke` is a regression signal, not a
+benchmark guarantee.
 
 ## Before any future external release
 

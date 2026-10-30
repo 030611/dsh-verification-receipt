@@ -20,6 +20,31 @@ One plugin instance serializes its own writes. Separate processes have no shared
 
 Directory/file creation modes are best-effort: existing permissions are unchanged, Windows may ignore POSIX modes, and a pre-existing symbolic link is followed. The configured destination is a trusted-administrator boundary, not a defense against hostile path components.
 
+## Installation and build boundary
+
+Release tarballs include `lib/index.js` and `lib/types/*.d.ts`. They do not need
+the TypeScript/esbuild development toolchain to load. The source `prepack`
+hook runs `pnpm run build` before packing; it reads the TypeScript sources and
+tsconfig files and writes compiled output to `lib/`. The build command itself
+does not fetch data or make provider/model requests. Installing dependencies
+is a separate package-manager operation that may access the registry and run
+dependencies' own permitted scripts.
+
+This source tree has no consumer installation hooks, including `prepare`.
+The published 0.1.0 tarball did retain `prepare: pnpm run build`; the presence
+of that field alone does not prove it executes on an ordinary npm registry
+dependency install. Local checkout and Git dependency preparation have
+different lifecycle rules. Moving the build to `prepack` does not make Git
+dependency preparation script-free; prefer prebuilt tarballs for that boundary.
+
+The release smoke test retains lifecycle metadata instead of relying on pnpm
+to strip it, rejects install hooks, verifies a fresh build's exact file list,
+and checks imports plus a synthetic receipt after script-disabled and
+script-enabled installs. It does not sandbox the package manager, audit all
+transitive dependencies, or prove the absence of every network/filesystem
+effect. Using `--ignore-scripts` is a package-manager control, not a guarantee
+that executing the plugin itself is safe.
+
 ## Report a vulnerability
 
 Do not publish secrets, private receipt files, or exploitable details in a public issue. Contact the repository maintainer privately with:

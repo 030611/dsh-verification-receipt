@@ -34,6 +34,11 @@ DSH Verification Receipt 是一个面向 [DeepSeek Harness](https://github.com/d
 
 ## 安装
 
+上面的兼容性证据对应源码版本 0.1.1。GitHub 修改版本号不会自动发布到 npm；
+使用包名安装前，可运行 `npm view dsh-verification-receipt version` 核对 registry
+版本是否已包含这些改动。发布前需要使用此源码版本时，请构建并打包 checkout，
+再将生成的 `.tgz` 传给 `dsh plugin --profile web add`。
+
 把已发布的包加入需要生成凭证的每个 profile：
 
 ```sh
@@ -42,6 +47,17 @@ dsh --profile web --dump-config
 ```
 
 如果其他 profile（例如 `headless`）也需要凭证，请换用对应 profile 名重复第一条命令。本地开发时，克隆本仓库并运行 `pnpm install --frozen-lockfile && pnpm run check`，再把 checkout 路径而不是包名传给 `dsh plugin ... add`。
+
+tarball 已包含编译后的 JavaScript 和 TypeScript 声明，使用者不需要 TypeScript、
+esbuild 或插件构建步骤。单独安装包时，可用
+`pnpm add --ignore-scripts dsh-verification-receipt@<version>` 禁用依赖生命周期
+脚本；请将占位符换成已发布版本。这是包管理器命令，不是 DSH CLI 参数。
+
+本源码树通过 `prepack` 在打包/发布前构建，没有 `prepare`、`preinstall`、
+`install` 或 `postinstall` 钩子。checkout 安装依赖后，需要显式运行
+`pnpm run build` 或 `pnpm run check`。直接安装 Git 源码仍可能由包管理器触发
+`prepack`，不能称为无脚本安装；优先使用预编译的 registry 包或已审阅的 tarball。
+具体边界见 [SECURITY.md](SECURITY.md#installation-and-build-boundary)。
 
 `package.json` 声明 `dsh.bundle.patch`；`cordis.patch.yml` 插入一个普通观察插件。任何提供核心 Session 服务的 DSH 输出面都可以使用它。
 
@@ -172,7 +188,7 @@ pnpm run release:smoke
 pnpm run performance:smoke
 ```
 
-测试覆盖隐私排除、确定性 hash、顶层与 Code Mode 最终状态、分类支持/不支持矩阵、监听器释放、磁盘排空，以及真实 DSH `Context + SessionStore` 组合。`release:smoke` 会锁定 tarball 精确文件清单，把真实 `.tgz` 安装进临时项目，并按包名导入。
+测试覆盖隐私排除、确定性 hash、顶层与 Code Mode 最终状态、分类支持/不支持矩阵、监听器释放、磁盘排空，以及真实 DSH `Context + SessionStore` 组合。`release:smoke` 会删除生成的 `lib/` 后重新打包，保留生命周期元数据以检查安装钩子，并锁定 tarball 精确文件清单。随后在两个独立临时项目中分别禁用、启用安装脚本，按包名导入真实 `.tgz` 并核对一条合成凭证。
 
 ## 许可证
 
